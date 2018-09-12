@@ -1,7 +1,5 @@
 <?php
 
-$DATABASE_URL=parse_url('ec2-50-17-194-186.compute-1.amazonaws.com');
-
 return [
 
     /*
@@ -58,11 +56,11 @@ return [
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'host' => $DATABASE_URL["host"],
-            'port' => $DATABASE_URL["port"],
-            'database' => ltrim($DATABASE_URL["path"], "/"),
-            'username' => $DATABASE_URL["user"],
-            'password' => $DATABASE_URL["pass"],
+            'host' => parse_url(getenv('DATABASE_URL'), PHP_URL_HOST),
+            'port' => parse_url(getenv('DATABASE_URL'), PHP_URL_PORT),
+            'database' => substr(parse_url(getenv('DATABASE_URL'), PHP_URL_PATH), 1),
+            'username' => parse_url(getenv('DATABASE_URL'), PHP_URL_USER),
+            'password' => parse_url(getenv('DATABASE_URL'), PHP_URL_PASS),
             'charset' => 'utf8',
             'prefix' => '',
             'schema' => 'public',
